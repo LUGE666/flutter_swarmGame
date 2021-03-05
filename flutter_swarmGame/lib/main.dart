@@ -4,13 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_swarmGame/game_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   Util flameUtil = Util();
-  // await flameUtil.fullScreen(); //全屏
-  // await flameUtil.setOrientation(DeviceOrientation.portraitUp); //设置方向
+  WidgetsFlutterBinding.ensureInitialized();
+  await flameUtil.fullScreen(); //全屏
+  await flameUtil.setOrientation(DeviceOrientation.portraitUp); //设置方向
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences storage = await SharedPreferences.getInstance();
 
-  GameController gameController = GameController();
+  GameController gameController = GameController(storage);
+
   runApp(gameController.widget);
 
   TapGestureRecognizer tapper = TapGestureRecognizer();
